@@ -1,8 +1,18 @@
-from django.urls import path
-from .views import (index, contact_list, new_contact, contact_details,
-                    update_contact, delete_contact)
+from django.urls import path, include  # add this
+from rest_framework.routers import DefaultRouter  # add this
+from .views import (
+    index, contact_list,
+    new_contact, contact_details,
+    update_contact, delete_contact
+)
+from .api import ContactViewSet  # add this
+router = DefaultRouter()  # add this
+router.register(r'contacts', ContactViewSet,
+                basename='contact')  # add this
+
 
 urlpatterns = [
+    path("api/", include(router.urls)),
     path("", index, name="home"),
     path("contacts/", contact_list, name="contacts"),
     path("contacts/new/", new_contact, name="new"),
