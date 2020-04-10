@@ -1,6 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from .forms import UserProfileForm
+from .models import Profile
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -32,3 +32,25 @@ def register_user(request):
     else:
         form = SignUpForm()
     return render(request, "accounts/register.html", {"form": form})
+
+
+def user_profile(request, id):
+    user = get_object_or_404(User, id=id)
+    return next
+
+
+def update_user(request, id):
+    user = get_object_or_404(User, id=id)
+    profile = Profile.objects.filter(user=user)
+    form = UserProfileForm()
+    if request.method == "POST":
+        update_profile_form = UserProfileForm(request.POST, request.FILES)
+        bio = request.POST.get('bio')
+        picture = request.FILES.get('picture')
+        if update_profile_form.is_valid():
+            profile.update(
+                bio=bio,
+                picture=picture
+            )
+
+    return render(request, 'accounts/update_profile.html', {'form': form})
