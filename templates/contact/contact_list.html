@@ -11,9 +11,7 @@
       <ul class="list-group list-group-flush">
         {% for contact in contacts %}
         <li class="list-group-item">
-          <a href="{% url 'details' contact.id %}">
-            {{ contact.first_name }} {{ contact.last_name }}</a
-          >
+          <a href="{% url 'details' contact.id %}"> {{ contact.email }}</a>
         </li>
         {% endfor %}
       </ul>

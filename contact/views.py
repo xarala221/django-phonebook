@@ -3,16 +3,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact
 
 
-def index(request):
-    return render(request, "index.html")
-
 # Contact list
 
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def contact_list(request):
     user = request.user
-    contacts = Contact.objects.filter(created_by=user)
+    if user.is_authenticated:
+        contacts = Contact.objects.filter(created_by=user)
+    contacts = Contact.objects.filter(created_by=None)
     return render(request, "contact/contact_list.html", {"contacts": contacts})
 
 # detail contact
