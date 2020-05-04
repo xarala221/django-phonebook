@@ -1,7 +1,7 @@
 from django.urls import path, include  # add this
 from rest_framework.routers import DefaultRouter  # add this
 from .views import (
-    contact_list,
+    ContactList,
     new_contact, contact_details,
     update_contact, delete_contact
 )
@@ -13,7 +13,7 @@ router.register(r'contacts', ContactViewSet,
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("contacts/", contact_list, name="contacts"),
+    path("contacts/", ContactList.as_view(), name="contacts"),
     path("contacts/new/", new_contact, name="new"),
     path("contacts/<int:id>/details/", contact_details, name="details"),
     path("contacts/<int:id>/update/", update_contact, name="update"),
